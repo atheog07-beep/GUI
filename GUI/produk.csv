@@ -1,0 +1,47 @@
+kode,nama_barang,harga,kategori
+100,Rima Biscuit Kelapa 345Gr,34900,makanan
+101,Oreo Original,8700,makanan
+102,Orio Biscuit Sandwich 1 pack,19700,makanan
+103,Pocky Strawberry Peach 38g,12900,makanan
+104,Richeese Nabati 122g,9900,makanan
+105,Indomie Mi Instan Goreng 80g,3200,makanan
+106,Indomie Mi Instan Goreng Aceh 90g,3200,makanan
+107,Indomie Mi Instan Goreng Rendang 91g,3200,makanan
+108,Sarimi Mie Goreng (Isi2) Ayam Pedas,4500,makanan
+109,Sarimi Mie Goreng (Isi2) Ayam Kecap,4500,makanan
+110,Sari Roti Roti Manis Choco Bun 55g,5000,makanan
+111,Sari Roti Tawar Klasik 360g,12500,makanan
+112,Sari Roti Tawar Coklat 275g,19500,makanan
+113,Sari Roti Sandwich Pandan Sarikaya 49g,6000,makanan
+114,Sari Roti Manis Sobek 214g,18000,makanan
+115,Chitato Snack Beef 168g,27700,makanan
+116,Potabee Potato Wagyu Beef 68g,10900,makanan
+117,Taro SeaWeed 180g,12500,makanan
+118,Chitato Lite Snack Nori 120g,17200,makanan
+119,Wall's Ice Cream Cornetto Disc 120mL,12200,makanan
+120,Wall's Ice Cream Magnum 75mL,20500,makanan
+200,Aqua Air Mineral 600mL,3900,minuman
+201,Le Mineral Air Mineral 600mL,3600,minuman
+202,Aquviva Air Mineral 700mL,3500,minuman
+203,Pucuk Harum Minuman Teh 350mL,3900,minuman
+204,Coca-Cola Soft Drink 390mL,5500,minuman
+205,Sprite Soft Drink 390mL,5500,minuman
+206,Fanta Soft Drink Grape 390mL,5500,minuman
+207,Pocari Sweat Minuman Isotonic 350mL,6900,minuman
+208,Kopiko Coffee Latte 78C 240mL,8700,minuman
+209,Milo Healthy Drink Cool 220mL,10700,minuman
+300,Tropical Minyak Goreng 2L,45000,masakan
+301,Indofood Tepung Bumbu Racik Ayam 210g,6800,masakan
+302,Bango Kecap Manis 385g,24900,masakan
+303,Indofood Saus Tomat 275mL,10900,masakan
+304,Del Monte Chili Sauce Extra Hot 135mL,7500,masakan
+305,Ajinomoto Bumbu Masak 90g,5000,masakan
+306,Indomaret Garam 500g,8000,masakan
+307,Ladaku Merica Bubuk 35g,39000,masakan
+308,Indomaret Cuka 150mL,5800,masakan
+309,Blue Band Margarine 200g,9900,masakan
+400,Sampoerna Rokok Filter Mild 12Btg,34000,rokok
+401,Dji Sam Soe Rokok Kretek 12Btg,21900,rokok
+402,Sampoerna Rokok Filter Mild Merah 12Btg,28400,rokok
+403,Camel Rokok Filter Option Purple 16,27000,rokok
+404,Djarum Super Rokok Filter 12,25700,rokok
