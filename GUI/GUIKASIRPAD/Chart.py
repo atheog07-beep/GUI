@@ -4,7 +4,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from KasirPAD.GUI.GUIKASIRPAD.Laporan import Laporan
 
 class Chart(tk.Toplevel):
     def __init__(self, parent, laporan):

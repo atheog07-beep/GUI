@@ -1,12 +1,12 @@
 import tkinter as tk
 from tkinter import messagebox
-from KasirPAD.GUI.GUIKASIRPAD.Produk import Produk
-from KasirPAD.GUI.GUIKASIRPAD.Kasir import Kasir
-from KasirPAD.GUI.GUIKASIRPAD.Laporan import Laporan
-from KasirPAD.GUI.GUIKASIRPAD.Struk import Struk
-from KasirPAD.GUI.GUIKASIRPAD.FormLaporan import FormLaporan
-from KasirPAD.GUI.GUIKASIRPAD.Chart import Chart
-from KasirPAD.GUI.GUIKASIRPAD.Qris import Qris
+from Produk import Produk
+from Kasir import Kasir
+from Laporan import Laporan
+from Struk import Struk
+from FormLaporan import FormLaporan
+from Chart import Chart
+from Qris import Qris
 
 FILE_PRODUK  = r"C:\Users\LENOVO\OneDrive\Documents\IF belajar 2\KasirPAD\GUI\produk.csv"
 FILE_LAPORAN = r"C:\Users\LENOVO\OneDrive\Documents\IF belajar 2\KasirPAD\GUI\laporan_penjualan.csv"
@@ -51,14 +51,6 @@ class App:  # FIX: hapus tk.Toplevel — App bukan window, dia yang pegang root
         tk.Label(frame_form, text="Pilih produk yang akan ditambahkan :",
                  font=("Arial", 10), bg="white").grid(row=0, column=0, sticky="w", pady=(0,4))
 
-        self.lblPilih = tk.StringVar()
-        self.lblPilih.trace_add("write", self.update_harga)
-        self.lblPilih.set("Pilih produk")
-        contoh_produk = [item["nama"] for item in self.produk.daftar]
-        opsiProduk = tk.OptionMenu(frame_form, self.lblPilih, *contoh_produk)
-        opsiProduk.config(width=34, font=("Arial", 10))
-        opsiProduk.grid(row=1, column=0, sticky="w", pady=(0,16))
-
         tk.Label(frame_form, text="Masukkan jumlah barang :").grid(row=2, column=0, sticky="w")
         self.entry_jml = tk.Entry(frame_form, width=12, font=("Arial", 11), relief="solid", bd=1)
         self.entry_jml.insert(0, "1")
@@ -91,6 +83,14 @@ class App:  # FIX: hapus tk.Toplevel — App bukan window, dia yang pegang root
                   font=("Arial", 10, "bold"), bg="#003DA5", fg="white",
                   relief="flat", padx=10, pady=8, cursor="hand2",
                   command=self.tambah_ke_keranjang).grid(row=7, column=0, sticky="w", pady=(0,10))
+        
+        self.lblPilih = tk.StringVar()
+        self.lblPilih.trace_add("write", self.update_harga)
+        self.lblPilih.set("Pilih produk")
+        contoh_produk = [item["nama"] for item in self.produk.daftar]
+        opsiProduk = tk.OptionMenu(frame_form, self.lblPilih, *contoh_produk)
+        opsiProduk.config(width=34, font=("Arial", 10))
+        opsiProduk.grid(row=1, column=0, sticky="w", pady=(0,16))
 
     def build_keranjang(self, parent):
         frame_kanan = tk.Frame(parent, bg="white")
@@ -137,8 +137,7 @@ class App:  # FIX: hapus tk.Toplevel — App bukan window, dia yang pegang root
     # ── METHODS ──────────────────────────────────────────
 
     def update_harga(self, *args):
-        if not hasattr(self, "lblHargaSatuanReal"):  
-            return
+        
         item = self.produk.cari(self.lblPilih.get())
         if not item:
             self.lblHargaSatuanReal.config(text="Rp 0")

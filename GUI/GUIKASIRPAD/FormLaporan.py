@@ -55,13 +55,9 @@ class FormLaporan(tk.Toplevel):
                     tanggal_sebelumnya = tanggal
                 self.lb.insert(tk.END,
                     f"  {baris['nama']:<38} {baris['jumlah']:>5} "
-                    f"{baris['harga_satuan']:>14} "
-                    f"{baris['subtotal']:>14}"
+                    f"{self.rupiah(baris['harga_satuan']):>14} "
+                    f"{self.rupiah(baris['subtotal']):>14}"
                 )
-            if baris:
-                self.lb.insert(tk.END, "-" * 50)
-                self.lb.insert(tk.END, f"  {'Total Bersih':>55} {baris['total_bersih']}")
-                self.lb.insert(tk.END, "=" * 50)
 
     def hapus_laporan(self):
         from tkinter import messagebox
@@ -76,3 +72,6 @@ class FormLaporan(tk.Toplevel):
     def lihat_chart(self):
         if self.on_chart:
             self.on_chart()  
+    
+    def rupiah(self, angka):
+        return f"Rp {int(angka):,}".replace(",", ".")
