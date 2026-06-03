@@ -24,7 +24,7 @@ class FormLaporan(tk.Toplevel):
         # frame button
         frame_btn = tk.Frame(self, bg="#e8e8e8", pady=8)
         frame_btn.pack(fill="x", padx=10)
-
+        """
         tk.Button(frame_btn, text="Lihat Chart", command=self.lihat_chart,
                   font=("Arial", 10), bg="#003DA5", fg="white",
                   relief="flat", padx=16, pady=6).pack(side="left", padx=6)
@@ -34,7 +34,19 @@ class FormLaporan(tk.Toplevel):
         tk.Button(frame_btn, text="Hapus Laporan", command=self.hapus_laporan,
                   font=("Arial", 10), bg="#003DA5", fg="white",
                   relief="flat", padx=16, pady=6).pack(side="right", padx=10)
-
+                  """
+        tombol_bawah = [
+            ("Lihat Chart", self.lihat_chart, "white", "#003DA5"),
+            ("Tutup",   self.destroy,    "white", "#003DA5"),
+            ("Hapus Laporan", self.hapus_laporan, "white", "#003DA5")
+        ]
+        for text, cmd, bg, fg in tombol_bawah:
+            btn = tk.Button(frame_btn, text=text, command=cmd,
+                            font=("Arial", 10), bg=bg, fg=fg,
+                            relief="solid", bd=1, padx=10, pady=6, cursor="hand2")
+            btn.bind("<Enter>", lambda e: e.widget.config(bg="#0056b3", fg="white"))
+            btn.bind("<Leave>", lambda e, b=bg, f=fg: e.widget.config(bg=b, fg=f))
+            btn.pack(side="right", padx=(10,0))
         self.isi_laporan()  
 
     def isi_laporan(self):
@@ -75,3 +87,10 @@ class FormLaporan(tk.Toplevel):
     
     def rupiah(self, angka):
         return f"Rp {int(angka):,}".replace(",", ".")
+    
+    def buat_button(self, parent, text, command, **kwargs):
+        btn = tk.Button(parent, text=text, command=command,
+                        bg="white", fg="#003DA5", **kwargs)
+        btn.bind("<Enter>", lambda event: event.widget.config(bg="#0056b3", fg="white"))
+        btn.bind("<Leave>", lambda event: event.widget.config(bg="white", fg="#003DA5"))
+        return btn

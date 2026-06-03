@@ -58,7 +58,7 @@ class Struk(tk.Toplevel):
         tk.Frame(self, bg="#E61E25", height=6).pack(fill="x", side="bottom")
         tk.Button(self, text="Tutup", command=self.destroy,
                   font=("Arial", 10), bg="#003DA5", fg="white",
-                  relief="flat", padx=16, pady=6).pack(pady=10, side="bottom")
+                  relief="flat", padx=16, pady=6, cursor="hand2").pack(pady=10, side="bottom")
 
         self.laporan.simpan(self.keranjang, total_bersih)
         self.kasir.clear_keranjang()

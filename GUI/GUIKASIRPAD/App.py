@@ -11,7 +11,7 @@ from Qris import Qris
 FILE_PRODUK  = r"C:\Users\LENOVO\OneDrive\Documents\IF belajar 2\KasirPAD\GUI\produk.csv"
 FILE_LAPORAN = r"C:\Users\LENOVO\OneDrive\Documents\IF belajar 2\KasirPAD\GUI\laporan_penjualan.csv"
 
-class App:  # FIX: hapus tk.Toplevel — App bukan window, dia yang pegang root
+class App:  
     def __init__(self, root):
         self.root      = root
         self.produk    = Produk(FILE_PRODUK)
@@ -76,21 +76,24 @@ class App:  # FIX: hapus tk.Toplevel — App bukan window, dia yang pegang root
         self.lblPilih2 = tk.StringVar()
         self.lblPilih2.set("Metode Pembayaran")
         pembayaran = tk.OptionMenu(frame_form, self.lblPilih2, "Cash", "Qris")
-        pembayaran.config(width=34, font=("Arial", 10))
+        pembayaran.config(width=34, font=("Arial", 10), cursor="hand2" )
         pembayaran.grid(row=6, column=0, sticky="w", pady=(0,16))
 
-        tk.Button(frame_form, text="  Masukan Ke Keranjang  ",
-                  font=("Arial", 10, "bold"), bg="#003DA5", fg="white",
-                  relief="flat", padx=10, pady=8, cursor="hand2",
-                  command=self.tambah_ke_keranjang).grid(row=7, column=0, sticky="w", pady=(0,10))
+        btnTambah = tk.Button(frame_form, text="  Masukan Ke Keranjang  ",
+          font=("Arial", 10, "bold"), bg="#003DA5", fg="white",
+          relief="flat", padx=10, pady=8, cursor="hand2",
+          command=self.tambah_ke_keranjang)
+        btnTambah.grid(row=7, column=0, sticky="w", pady=(0,10))
+        btnTambah.bind("<Enter>", lambda e: e.widget.config(bg="#0056b3"))
+        btnTambah.bind("<Leave>", lambda e: e.widget.config(bg="#003DA5"))
         
         self.lblPilih = tk.StringVar()
-        self.lblPilih.trace_add("write", self.update_harga)
         self.lblPilih.set("Pilih produk")
         contoh_produk = [item["nama"] for item in self.produk.daftar]
         opsiProduk = tk.OptionMenu(frame_form, self.lblPilih, *contoh_produk)
-        opsiProduk.config(width=34, font=("Arial", 10))
+        opsiProduk.config(width=34, font=("Arial", 10), cursor="hand2" )
         opsiProduk.grid(row=1, column=0, sticky="w", pady=(0,16))
+        self.lblPilih.trace_add("write", self.update_harga)
 
     def build_keranjang(self, parent):
         frame_kanan = tk.Frame(parent, bg="white")
@@ -118,21 +121,29 @@ class App:  # FIX: hapus tk.Toplevel — App bukan window, dia yang pegang root
         frame_bawah = tk.Frame(self.root, bg="#e8e8e8", pady=12)
         frame_bawah.pack(fill="x", padx=20, pady=4)
 
-        tk.Button(frame_bawah, text="Lihat Daftar Produk", font=("Arial", 10),
-                  bg="white", fg="#003DA5", relief="solid", bd=1, padx=10, pady=6,
-                  cursor="hand2", command=self.lihat_daftar_produk).pack(side="left")
+        tombol_kiri = [
+            ("Lihat Daftar Produk", self.lihat_daftar_produk, "white", "#003DA5"),
+            ("Cetak Struk",         self.form_cetak_struk,    "#E61E25", "white"),
+        ]
+        for text, cmd, bg, fg in tombol_kiri:
+            btn = tk.Button(frame_bawah, text=text, command=cmd,
+                            font=("Arial", 10), bg=bg, fg=fg,
+                            relief="solid", bd=1, padx=10, pady=6, cursor="hand2")
+            btn.bind("<Enter>", lambda e, b=bg: e.widget.config(bg="#0056b3", fg="white"))
+            btn.bind("<Leave>", lambda e, b=bg, f=fg: e.widget.config(bg=b, fg=f))
+            btn.pack(side="left", padx=(0,10))
 
-        tk.Button(frame_bawah, text="Cetak Struk", font=("Arial", 10),
-                  bg="#E61E25", fg="white", relief="solid", bd=1, padx=10, pady=6,
-                  cursor="hand2", command=self.form_cetak_struk).pack(side="left", padx=10)
-
-        tk.Button(frame_bawah, text="Lihat Laporan", font=("Arial", 10),
-                  bg="white", fg="#003DA5", relief="solid", bd=1, padx=10, pady=6,
-                  cursor="hand2", command=self.form_laporan).pack(side="right", padx=10)  
-
-        tk.Button(frame_bawah, text="Hapus Keranjang", font=("Arial", 10),
-                  bg="white", fg="#003DA5", relief="solid", bd=1, padx=10, pady=6,
-                  cursor="hand2", command=self.hapus_keranjang).pack(side="right")
+        tombol_kanan = [
+            ("Hapus Keranjang", self.hapus_keranjang, "white", "#003DA5"),
+            ("Lihat Laporan",   self.form_laporan,    "white", "#003DA5"),
+        ]
+        for text, cmd, bg, fg in tombol_kanan:
+            btn = tk.Button(frame_bawah, text=text, command=cmd,
+                            font=("Arial", 10), bg=bg, fg=fg,
+                            relief="solid", bd=1, padx=10, pady=6, cursor="hand2")
+            btn.bind("<Enter>", lambda e: e.widget.config(bg="#0056b3", fg="white"))
+            btn.bind("<Leave>", lambda e, b=bg, f=fg: e.widget.config(bg=b, fg=f))
+            btn.pack(side="right", padx=(10,0))
 
     # ── METHODS ──────────────────────────────────────────
 
@@ -229,4 +240,11 @@ class App:  # FIX: hapus tk.Toplevel — App bukan window, dia yang pegang root
 
         tk.Button(win, text="Tutup", command=win.destroy,
                   font=("Arial", 10), bg="#003DA5", fg="white",
-                  relief="flat", padx=16, pady=6).pack(pady=8)
+                  relief="flat", padx=16, pady=6 ).pack(pady=8)
+        
+    def buat_button(self, parent, text, command, **kwargs):
+        btn = tk.Button(parent, text=text, command=command,
+                        bg="white", fg="#003DA5", **kwargs)
+        btn.bind("<Enter>", lambda event: event.widget.config(bg="#0056b3", fg="white"))
+        btn.bind("<Leave>", lambda event: event.widget.config(bg="white", fg="#003DA5"))
+        return btn

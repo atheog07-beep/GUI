@@ -27,7 +27,7 @@ class Qris(tk.Toplevel):
         frmRingkasan.pack(fill="x", padx=20, pady=10)
         tk.Label(frmRingkasan, text="Total yang harus dibayar :",
                  font=("Arial", 9), bg="#f0f4ff", fg="#555555").pack(anchor="w")
-        tk.Label(frmRingkasan, text=self.rupiah(self.total_bersih),  # FIX: self.rupiah bukan method warisan
+        tk.Label(frmRingkasan, text=self.rupiah(self.total_bersih),  
                  font=("Arial", 14, "bold"), bg="#f0f4ff", fg="#003DA5").pack(anchor="w")
 
         data_qr = f"KASIR|{self.total_bersih}|{dt.datetime.now().strftime('%Y%m%d%H%M%S')}"

@@ -29,7 +29,7 @@ class Chart(tk.Toplevel):
 
         tk.Button(self, text="Tutup", command=self.destroy,
                   font=("Arial", 10), bg="white", fg="#003DA5",
-                  relief="solid", bd=1, padx=16, pady=6).pack(pady=8)
+                  relief="solid", bd=1, padx=16, pady=6, cursor="hand2").pack(pady=8)
 
     def tampil_chart(self):
         df = pd.read_csv(self.laporan.file, usecols=["tanggal", "nama", "jumlah", "subtotal"])
