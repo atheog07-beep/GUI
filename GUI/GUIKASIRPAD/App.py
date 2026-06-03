@@ -7,9 +7,11 @@ from Struk import Struk
 from FormLaporan import FormLaporan
 from Chart import Chart
 from Qris import Qris
+import os
 
-FILE_PRODUK  = r"C:\Users\LENOVO\OneDrive\Documents\IF belajar 2\KasirPAD\GUI\produk.csv"
-FILE_LAPORAN = r"C:\Users\LENOVO\OneDrive\Documents\IF belajar 2\KasirPAD\GUI\laporan_penjualan.csv"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+FILE_PRODUK = os.path.join(BASE_DIR, "produk.csv")
+FILE_LAPORAN = os.path.join(BASE_DIR, "laporan_penjualan.csv")  
 
 class App:  
     def __init__(self, root):

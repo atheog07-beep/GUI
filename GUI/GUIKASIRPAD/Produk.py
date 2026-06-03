@@ -1,8 +1,9 @@
 import pandas as pd
-
+import os
 class Produk:
     def __init__(self, file_produk):
-        self.file_produk = file_produk
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        self.file_produk = os.path.join(base_dir, file_produk)
         self.daftar      = self.baca()
 
     def baca(self):

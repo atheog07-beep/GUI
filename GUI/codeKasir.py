@@ -3,8 +3,8 @@ import pandas as pd
 import os
 import csv
 
-FILE_PRODUK  = r"C:\Users\LENOVO\OneDrive\Documents\IF belajar 2\KasirPAD\GUI\produk.csv"
-FILE_LAPORAN = r"C:\Users\LENOVO\OneDrive\Documents\IF belajar 2\KasirPAD\GUI\laporan_penjualan.csv"
+FILE_PRODUK  = r"produk.csv"
+FILE_LAPORAN = r"laporan_penjualan.csv"
 
 keranjang = []
 
@@ -50,7 +50,7 @@ def laporan_penjualan():
     total_bersih  = total - nilai_diskon
 
     #cek file kosong/belum ada
-    tulis_header = not os.path.exists(FILE_LAPORAN) or os.path.getsize(FILE_LAPORAN) == 0
+    tulis_header = cekLaporan()
 
     with open(FILE_LAPORAN, "a", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
