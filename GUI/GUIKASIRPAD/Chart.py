@@ -5,13 +5,8 @@ import matplotlib.pyplot as plt #import library matplotlib untuk membuat grafik
 import matplotlib.ticker as mticker #import library matplotlib untuk mengformat label disetiap sumbu 
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg #import untuk menampilkan chart matplotlib di dalam jendela Tkinte
 
-class Chart(tk.Toplevel):
-    def __init__(self, parent, laporan):
-        """
-        Inisialisasi window chart penjualan.
-        - parent  : window utama
-        - laporan : objek Laporan yang menyimpan path dan data file CSV
-        """
+class Chart(tk.Toplevel): #inisiasi class chart yang punya window terpisah
+    def __init__(self, parent, laporan): #construktor
         super().__init__(parent)
         self.laporan = laporan
         self.build()
