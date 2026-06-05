@@ -1,16 +1,21 @@
-import tkinter as tk
-from tkinter import messagebox
-import pandas as pd
-import matplotlib.pyplot as plt
-import matplotlib.ticker as mticker
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import tkinter as tk #import library gui
+from tkinter import messagebox #import modul dialog popup (error, warning, konfirmasi)
+import pandas as pd  #import library pandas
+import matplotlib.pyplot as plt #import library matplotlib untuk membuat grafik
+import matplotlib.ticker as mticker #import library matplotlib untuk mengformat label disetiap sumbu 
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg #import untuk menampilkan chart matplotlib di dalam jendela Tkinte
 
 class Chart(tk.Toplevel):
     def __init__(self, parent, laporan):
+        """
+        Inisialisasi window chart penjualan.
+        - parent  : window utama
+        - laporan : objek Laporan yang menyimpan path dan data file CSV
+        """
         super().__init__(parent)
         self.laporan = laporan
         self.build()
-
+    #method untuk build window chart
     def build(self):
         if self.laporan.cek_kosong():
             messagebox.showwarning("Warning", "Belum ada laporan penjualan")
@@ -30,7 +35,8 @@ class Chart(tk.Toplevel):
         tk.Button(self, text="Tutup", command=self.destroy,
                   font=("Arial", 10), bg="white", fg="#003DA5",
                   relief="solid", bd=1, padx=16, pady=6, cursor="hand2").pack(pady=8)
-
+        
+    #method untuk menampilkan 4 chart berdasarkan laporan penjualan
     def tampil_chart(self):
         df = pd.read_csv(self.laporan.file, usecols=["tanggal", "nama", "jumlah", "subtotal"])
         df["tanggal"] = pd.to_datetime(df["tanggal"])
