@@ -1,13 +1,14 @@
-import tkinter as tk
-import csv
+import tkinter as tk #import library gui
+import csv #import modul untuk membaca dan menulis file .csv
 
-class FormLaporan(tk.Toplevel):
-    def __init__(self, parent, laporan, on_chart=None):
+class FormLaporan(tk.Toplevel): #inisiasi class FormLaporan yang punya window terpisah dari window utama 
+    def __init__(self, parent, laporan, on_chart=None): #construktor
         super().__init__(parent)
         self.laporan  = laporan
         self.on_chart = on_chart  
         self.build()             
 
+    #method untuk build window Laporan penjualan
     def build(self):
         self.title("Laporan Penjualan")
         self.geometry("620x460")
@@ -24,17 +25,7 @@ class FormLaporan(tk.Toplevel):
         # frame button
         frame_btn = tk.Frame(self, bg="#e8e8e8", pady=8)
         frame_btn.pack(fill="x", padx=10)
-        """
-        tk.Button(frame_btn, text="Lihat Chart", command=self.lihat_chart,
-                  font=("Arial", 10), bg="#003DA5", fg="white",
-                  relief="flat", padx=16, pady=6).pack(side="left", padx=6)
-        tk.Button(frame_btn, text="Tutup", command=self.destroy,
-                  font=("Arial", 10), bg="#003DA5", fg="white",
-                  relief="flat", padx=16, pady=6).pack(side="left", padx=10)
-        tk.Button(frame_btn, text="Hapus Laporan", command=self.hapus_laporan,
-                  font=("Arial", 10), bg="#003DA5", fg="white",
-                  relief="flat", padx=16, pady=6).pack(side="right", padx=10)
-                  """
+        
         tombol_bawah = [
             ("Lihat Chart", self.lihat_chart, "white", "#003DA5"),
             ("Tutup",   self.destroy,    "white", "#003DA5"),
@@ -49,6 +40,7 @@ class FormLaporan(tk.Toplevel):
             btn.pack(side="right", padx=(10,0))
         self.isi_laporan()  
 
+    #method untuk membuka file laporan penjualan dan ditampilkan di listbox
     def isi_laporan(self):
         if self.laporan.cek_kosong():
             self.lb.insert(tk.END, "Belum ada laporan penjualan")
@@ -70,7 +62,7 @@ class FormLaporan(tk.Toplevel):
                     f"{self.rupiah(baris['harga_satuan']):>14} "
                     f"{self.rupiah(baris['subtotal']):>14}"
                 )
-
+    #method untuk hapus laporan penjualan
     def hapus_laporan(self):
         from tkinter import messagebox
         if self.laporan.cek_kosong():
@@ -80,14 +72,16 @@ class FormLaporan(tk.Toplevel):
             self.laporan.kosongkan()
             messagebox.showinfo("Info", "Laporan berhasil dihapus!")
             self.destroy()
-
+    #method untuk membuka window chart
     def lihat_chart(self):
         if self.on_chart:
             self.on_chart()  
-    
+
+    #method helper untuk mengformat harga atau subtotal menjadi rupiah
     def rupiah(self, angka):
         return f"Rp {int(angka):,}".replace(",", ".")
-    
+
+    #method helper untuk memberikan efek saat ada kursor diatas tombol
     def buat_button(self, parent, text, command, **kwargs):
         btn = tk.Button(parent, text=text, command=command,
                         bg="white", fg="#003DA5", **kwargs)
