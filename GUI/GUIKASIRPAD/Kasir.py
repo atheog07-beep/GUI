@@ -1,7 +1,8 @@
-class Kasir:
-    def __init__(self):
+class Kasir: #inisiasi class Kasir
+    def __init__(self): #constructor
         self.keranjang = []
-
+        
+    #method untuk tambah belanjaan ke keranjang
     def tambah_item(self, kode, nama, harga, jumlah):
         for barang in self.keranjang:
             if barang["kode"] == kode:
@@ -13,9 +14,11 @@ class Kasir:
             "jumlah": jumlah, "subtotal": harga * jumlah
         })
 
+    #method untuk hitung total harga
     def hitung_total(self):
         return sum(i["subtotal"] for i in self.keranjang)
 
+    #method untuk menentukan pemberian diskon
     def diskon(self):
         total = self.hitung_total()
         if total >= 200000: return 15
@@ -23,5 +26,6 @@ class Kasir:
         elif total >= 50000: return 5
         return 0
 
+    #method untuk menghapus keranjang
     def clear_keranjang(self):
         self.keranjang.clear()
