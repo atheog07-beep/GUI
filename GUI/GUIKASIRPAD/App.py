@@ -1,36 +1,46 @@
-import tkinter as tk
-from tkinter import messagebox
-from Produk import Produk
-from Kasir import Kasir
-from Laporan import Laporan
-from Struk import Struk
-from FormLaporan import FormLaporan
-from Chart import Chart
-from Qris import Qris
-import os
+import tkinter as tk #import library gui
+from tkinter import messagebox #import modul dialog popup (error, warning, konfirmasi)
+from Produk import Produk #impoert class untuk membaca dan mencari data produk dari CSV
+from Kasir import Kasir #import class untuk mengelola keranjang belanja dan transaksi
+from Laporan import Laporan #import class untuk menyimpan dan membaca laporan penjualan
+from Struk import Struk #import class untuk window Struk
+from FormLaporan import FormLaporan #import class untuk window laporan penjualan
+from Chart import Chart #import class untuk window diagram
+from Qris import Qris #import class untuk window Qris
+import os #import untuk mengambil path file secara dinamis
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-FILE_PRODUK = os.path.join(BASE_DIR, "produk.csv")
-FILE_LAPORAN = os.path.join(BASE_DIR, "laporan_penjualan.csv")  
+BASE_DIR = os.path.dirname(os.path.abspath(__file__)) #mendapatkan lokasi folder tempat file itu berada
+FILE_PRODUK = os.path.join(BASE_DIR, "produk.csv")  #path lengkap ke file produk
+FILE_LAPORAN = os.path.join(BASE_DIR, "laporan_penjualan.csv")  #path lengkap ke file laporan_penjualan
 
-class App:  
-    def __init__(self, root):
+class App: #inisiasi nama class-nya 
+    def __init__(self, root): #constructor
+        """
+        Inisialisasi aplikasi kasir.
+        - root     : jendela utama Tkinter
+        - produk   : objek untuk mengakses data produk dari CSV
+        - kasir    : objek untuk mengelola transaksi dan keranjang
+        - laporan  : objek untuk menyimpan dan membaca laporan penjualan
+        - keranjang: referensi langsung ke list keranjang milik kasir
+        """
         self.root      = root
         self.produk    = Produk(FILE_PRODUK)
         self.kasir     = Kasir()
         self.laporan   = Laporan(FILE_LAPORAN)
         self.keranjang = self.kasir.keranjang
-        self.build()
-
+        self.build() #panggil method build
+        
+    #method helper untuk mengformat harga atau subtotal menjadi format mata uang Rupiah
     def rupiah(self, angka):
         return f"Rp {int(angka):,}".replace(",", ".")
-
+        
+    #build keseluruhan layout utama aplikasi
     def build(self):
         self.root.title("KlikRomushaMaret Kasir")
         self.root.geometry("1000x700")
         self.root.resizable(False, False)
         self.root.configure(bg="white")
-
+        
         frame_header = tk.Frame(self.root, bg="#003DA5", height=70)
         frame_header.pack(fill="x")
         frame_header.pack_propagate(False)
@@ -45,7 +55,8 @@ class App:
         self.build_form(frame_tengah)
         self.build_keranjang(frame_tengah)
         self.build_footer()
-
+        
+    #Membangun frame kiri berisi form pemilihan produk, input jumlah, tampilan harga, pilihan metode pembayaran, dan tombol tambah ke keranjang
     def build_form(self, parent):
         frame_form = tk.Frame(parent, bg="white", bd=1, relief="solid", padx=24, pady=20)
         frame_form.pack(side="left", fill="y", ipadx=10)
@@ -96,7 +107,8 @@ class App:
         opsiProduk.config(width=34, font=("Arial", 10), cursor="hand2" )
         opsiProduk.grid(row=1, column=0, sticky="w", pady=(0,16))
         self.lblPilih.trace_add("write", self.update_harga)
-
+        
+    #build frame kanan berisi daftar item di keranjang belanja dan label total harga
     def build_keranjang(self, parent):
         frame_kanan = tk.Frame(parent, bg="white")
         frame_kanan.pack(side="left", fill="both", expand=True, padx=(20,0))
@@ -118,7 +130,8 @@ class App:
         self.lblTotal = tk.Label(frmTotal, text="Total   : Rp 0",
                                  font=("Arial", 13, "bold"), fg="#FFD700", bg="#003DA5")
         self.lblTotal.pack(side="right", padx=16)
-
+        
+    #build baris tombol lihat produk, cetak struk, hapus keranjang, dan lihat laporan di bagian bawah
     def build_footer(self):
         frame_bawah = tk.Frame(self.root, bg="#e8e8e8", pady=12)
         frame_bawah.pack(fill="x", padx=20, pady=4)
@@ -147,10 +160,8 @@ class App:
             btn.bind("<Leave>", lambda e, b=bg, f=fg: e.widget.config(bg=b, fg=f))
             btn.pack(side="right", padx=(10,0))
 
-    # ── METHODS ──────────────────────────────────────────
-
+    #method untuk memperbarui tampilan harga satuan dan harga total setiap kali produk atau jumlah barang berubah
     def update_harga(self, *args):
-        
         item = self.produk.cari(self.lblPilih.get())
         if not item:
             self.lblHargaSatuanReal.config(text="Rp 0")
@@ -162,7 +173,7 @@ class App:
             jumlah = 1
         self.lblHargaSatuanReal.config(text=self.rupiah(item["harga"]))
         self.lblHargaTotalReal.config(text=self.rupiah(item["harga"] * jumlah))
-
+    #method untuk menambahkan produk yang dipilih ke keranjang belanja
     def tambah_ke_keranjang(self):
         try:
             jumlah = int(self.entry_jml.get())
@@ -178,7 +189,8 @@ class App:
             return
         self.kasir.tambah_item(item["kode"], item["nama"], item["harga"], jumlah)
         self.refresh_keranjang()
-
+        
+    #method untuk me-refresh tampilan listbox keranjang dan memperbarui label total harga
     def refresh_keranjang(self):
         self.listKeranjang.delete(0, tk.END)  
         total = 0
@@ -187,7 +199,8 @@ class App:
                 f"{item['nama']} | {item['jumlah']} x {self.rupiah(item['harga'])}")
             total += item["subtotal"]
         self.lblTotal.config(text=f"Total   : {self.rupiah(total)}")
-
+        
+    #method untuk menghapus isi keranjang secara keseluruhan
     def hapus_keranjang(self):
         if not self.keranjang:
             messagebox.showwarning("Error", "Tidak ada barang di keranjang!")
@@ -195,7 +208,8 @@ class App:
         if messagebox.askyesno("Konfirmasi", "Hapus semua barang di keranjang?"):
             self.kasir.clear_keranjang()  
             self.refresh_keranjang()
-
+            
+    #method untuk menampilkan struk pembayaran 
     def form_cetak_struk(self):
         if not self.keranjang:
             messagebox.showwarning("Error", "Tidak ada barang dalam keranjang!")
@@ -217,11 +231,13 @@ class App:
             Qris(self.root, total_bersih, dikonfirmasi=lanjut)  
         else:
             lanjut()
-
+            
+    #method untuk membuka form laporan penjualan dengan opsi untuk melihat chart
     def form_laporan(self): 
         FormLaporan(self.root, self.laporan,
                     on_chart=lambda: Chart(self.root, self.laporan))
-
+        
+    #method untuk menampilkan window daftar produk
     def lihat_daftar_produk(self):
         win = tk.Toplevel(self.root)
         win.title("Daftar Produk")
@@ -244,6 +260,7 @@ class App:
                   font=("Arial", 10), bg="#003DA5", fg="white",
                   relief="flat", padx=16, pady=6 ).pack(pady=8)
         
+    #method helper untuk memberikan efek saat ada kursor diatas tombol
     def buat_button(self, parent, text, command, **kwargs):
         btn = tk.Button(parent, text=text, command=command,
                         bg="white", fg="#003DA5", **kwargs)
