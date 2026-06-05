@@ -25,3 +25,5 @@ class Kasir:
 
     def clear_keranjang(self):
         self.keranjang.clear()
+    
+    

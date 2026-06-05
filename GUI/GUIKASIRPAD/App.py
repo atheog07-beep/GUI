@@ -8,8 +8,8 @@ from FormLaporan import FormLaporan
 from Chart import Chart
 from Qris import Qris
 
-FILE_PRODUK  = r"C:\Users\LENOVO\OneDrive\Documents\IF belajar 2\KasirPAD\GUI\produk.csv"
-FILE_LAPORAN = r"C:\Users\LENOVO\OneDrive\Documents\IF belajar 2\KasirPAD\GUI\laporan_penjualan.csv"
+FILE_PRODUK  = r"C:\Users\LENOVO\OneDrive\Documents\IF belajar 2\KasirPAD\GUI\GUIKASIRPAD\produk.csv"
+FILE_LAPORAN = r"C:\Users\LENOVO\OneDrive\Documents\IF belajar 2\KasirPAD\GUI\GUIKASIRPAD\laporan_penjualan.csv"
 
 class App:  
     def __init__(self, root):

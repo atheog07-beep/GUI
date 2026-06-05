@@ -24,17 +24,7 @@ class FormLaporan(tk.Toplevel):
         # frame button
         frame_btn = tk.Frame(self, bg="#e8e8e8", pady=8)
         frame_btn.pack(fill="x", padx=10)
-        """
-        tk.Button(frame_btn, text="Lihat Chart", command=self.lihat_chart,
-                  font=("Arial", 10), bg="#003DA5", fg="white",
-                  relief="flat", padx=16, pady=6).pack(side="left", padx=6)
-        tk.Button(frame_btn, text="Tutup", command=self.destroy,
-                  font=("Arial", 10), bg="#003DA5", fg="white",
-                  relief="flat", padx=16, pady=6).pack(side="left", padx=10)
-        tk.Button(frame_btn, text="Hapus Laporan", command=self.hapus_laporan,
-                  font=("Arial", 10), bg="#003DA5", fg="white",
-                  relief="flat", padx=16, pady=6).pack(side="right", padx=10)
-                  """
+        
         tombol_bawah = [
             ("Lihat Chart", self.lihat_chart, "white", "#003DA5"),
             ("Tutup",   self.destroy,    "white", "#003DA5"),
