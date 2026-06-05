@@ -13,16 +13,8 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__)) #mendapatkan lokasi folder
 FILE_PRODUK = os.path.join(BASE_DIR, "produk.csv")  #path lengkap ke file produk
 FILE_LAPORAN = os.path.join(BASE_DIR, "laporan_penjualan.csv")  #path lengkap ke file laporan_penjualan
 
-class App: #inisiasi nama class-nya 
+class App: #inisiasi class App sebagai window utama
     def __init__(self, root): #constructor
-        """
-        Inisialisasi aplikasi kasir.
-        - root     : jendela utama Tkinter
-        - produk   : objek untuk mengakses data produk dari CSV
-        - kasir    : objek untuk mengelola transaksi dan keranjang
-        - laporan  : objek untuk menyimpan dan membaca laporan penjualan
-        - keranjang: referensi langsung ke list keranjang milik kasir
-        """
         self.root      = root
         self.produk    = Produk(FILE_PRODUK)
         self.kasir     = Kasir()
